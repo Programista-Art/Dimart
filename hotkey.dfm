@@ -34,8 +34,8 @@ object FormHotKey: TFormHotKey
     ParentFont = False
     ReadOnly = True
     TabOrder = 0
-    ExplicitWidth = 628
-    ExplicitHeight = 345
+    ExplicitWidth = 473
+    ExplicitHeight = 138
   end
   object pnl1: TPanel
     Left = 0
@@ -44,8 +44,8 @@ object FormHotKey: TFormHotKey
     Height = 30
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 415
-    ExplicitWidth = 628
+    ExplicitTop = 138
+    ExplicitWidth = 473
     object btn1: TBitBtn
       Left = 401
       Top = 1
@@ -55,9 +55,8 @@ object FormHotKey: TFormHotKey
       Caption = 'Cancel'
       TabOrder = 0
       OnClick = btn1Click
-      ExplicitLeft = 448
-      ExplicitTop = 8
-      ExplicitHeight = 25
+      ExplicitLeft = 402
+      ExplicitTop = 6
     end
   end
 end

@@ -1,4 +1,4 @@
-program super_paint;
+program Dimart;
 
 
 
@@ -11,7 +11,8 @@ uses
   Vcl.Themes,
   Vcl.Styles,
   hotkey in 'hotkey.pas' {FormHotKey},
-  new_file in 'new_file.pas' {Form4};
+  new_file in 'new_file.pas' {Form4},
+  USettingsBrush in 'USettingsBrush.pas' {fSettingsBrush};
 
 {$R *.res}
 
@@ -24,5 +25,6 @@ begin
   Application.CreateForm(TForm3, Form3);
   Application.CreateForm(TFormHotKey, FormHotKey);
   Application.CreateForm(TForm4, Form4);
+  Application.CreateForm(TfSettingsBrush, fSettingsBrush);
   Application.Run;
 end.

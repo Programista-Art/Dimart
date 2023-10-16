@@ -17,7 +17,6 @@ object Form2: TForm2
   WindowState = wsMaximized
   OnCreate = FormCreate
   OnKeyPress = FormKeyPress
-  OnShow = FormShow
   TextHeight = 13
   object Panel1: TPanel
     Left = 880
@@ -35,7 +34,7 @@ object Form2: TForm2
     ParentFont = False
     TabOrder = 0
     ExplicitLeft = 876
-    ExplicitHeight = 1004
+    ExplicitHeight = 1007
     object Label2: TLabel
       AlignWithMargins = True
       Left = 6
@@ -5220,7 +5219,6 @@ object Form2: TForm2
       Min = 1
       Position = 40
       TabOrder = 0
-      OnChange = trckbr1Change
     end
     object trckbrClear: TTrackBar
       AlignWithMargins = True
@@ -5235,7 +5233,7 @@ object Form2: TForm2
       Align = alTop
       Max = 100
       Min = 1
-      Position = 1
+      Position = 40
       SelEnd = 100
       SelStart = 1
       TabOrder = 1
@@ -5353,10 +5351,21 @@ object Form2: TForm2
     Caption = 'tlb1'
     Images = ImageList1
     TabOrder = 1
-    ExplicitHeight = 1004
-    object btnClear: TToolButton
+    ExplicitHeight = 1007
+    object btn22: TToolButton
       Left = 0
       Top = 0
+      Hint = 'Open image'
+      Caption = 'btn22'
+      ImageIndex = 4
+      ParentShowHint = False
+      Wrap = True
+      ShowHint = True
+      OnClick = btn22Click
+    end
+    object btnClear: TToolButton
+      Left = 0
+      Top = 22
       Caption = 'btnClear'
       ImageIndex = 3
       Wrap = True
@@ -5364,14 +5373,15 @@ object Form2: TForm2
     end
     object btn6: TToolButton
       Left = 0
-      Top = 22
+      Top = 44
       Caption = 'btn6'
       ImageIndex = 20
       Wrap = True
+      OnClick = btn6Click
     end
     object btn7: TToolButton
       Left = 0
-      Top = 44
+      Top = 66
       Hint = 'Brush XOR'
       Caption = 'btn7'
       ImageIndex = 6
@@ -5382,7 +5392,7 @@ object Form2: TForm2
     end
     object btn8: TToolButton
       Left = 0
-      Top = 66
+      Top = 88
       Hint = 'Mask brush'
       Caption = 'btn8'
       ImageIndex = 7
@@ -5393,7 +5403,7 @@ object Form2: TForm2
     end
     object btn4: TToolButton
       Left = 0
-      Top = 88
+      Top = 110
       Caption = 'btn4'
       ImageIndex = 9
       Wrap = True
@@ -5401,7 +5411,7 @@ object Form2: TForm2
     end
     object btn9: TToolButton
       Left = 0
-      Top = 110
+      Top = 132
       Hint = 'Round brush'
       Caption = 'btn9'
       ImageIndex = 21
@@ -5412,7 +5422,7 @@ object Form2: TForm2
     end
     object btn12: TToolButton
       Left = 0
-      Top = 132
+      Top = 154
       Hint = 'Square brush'
       Caption = 'btn12'
       ImageIndex = 22
@@ -5423,7 +5433,7 @@ object Form2: TForm2
     end
     object btn10: TToolButton
       Left = 0
-      Top = 154
+      Top = 176
       Caption = 'btn10'
       ImageIndex = 18
       Wrap = True
@@ -5431,7 +5441,7 @@ object Form2: TForm2
     end
     object btn14: TToolButton
       Left = 0
-      Top = 176
+      Top = 198
       Hint = 'Normal brush'
       Caption = 'btn14'
       ImageIndex = 17
@@ -5442,19 +5452,11 @@ object Form2: TForm2
     end
     object btnEraser: TToolButton
       Left = 0
-      Top = 198
+      Top = 220
       Caption = 'btnGumka'
       ImageIndex = 1
       Wrap = True
       OnClick = btnEraserClick
-    end
-    object btn15: TToolButton
-      Left = 0
-      Top = 220
-      Caption = 'btn15'
-      ImageIndex = 14
-      Wrap = True
-      OnClick = btn15Click
     end
     object btn11: TToolButton
       Left = 0
@@ -5511,9 +5513,9 @@ object Form2: TForm2
     object btn20: TToolButton
       Left = 0
       Top = 352
-      Hint = ' '
+      Hint = 'Zigzag brush'
       Caption = 'btn20'
-      ImageIndex = 15
+      ImageIndex = 17
       ParentShowHint = False
       Wrap = True
       ShowHint = True
@@ -5530,30 +5532,13 @@ object Form2: TForm2
       ShowHint = True
       OnClick = btn21Click
     end
-    object btn22: TToolButton
-      Left = 0
-      Top = 396
-      Hint = 'Load image'
-      Caption = 'btn22'
-      ImageIndex = 17
-      ParentShowHint = False
-      Wrap = True
-      ShowHint = True
-      OnClick = btn22Click
-    end
     object btn23: TToolButton
       Left = 0
-      Top = 418
+      Top = 396
       Caption = 'btn23'
       ImageIndex = 7
       Wrap = True
       OnClick = btn23Click
-    end
-    object btn24: TToolButton
-      Left = 0
-      Top = 440
-      Caption = 'btn24'
-      ImageIndex = 19
     end
   end
   object pnl1: TPanel
@@ -5563,7 +5548,7 @@ object Form2: TForm2
     Height = 18
     Align = alBottom
     TabOrder = 2
-    ExplicitTop = 1004
+    ExplicitTop = 1007
     ExplicitWidth = 1057
     object statInfoPanel: TStatusBar
       Left = 1
@@ -5597,7 +5582,7 @@ object Form2: TForm2
     Align = alClient
     TabOrder = 3
     ExplicitWidth = 851
-    ExplicitHeight = 1004
+    ExplicitHeight = 1007
     object Image1: TImage
       Left = 0
       Top = 0
@@ -5609,7 +5594,7 @@ object Form2: TForm2
       OnMouseDown = Image1MouseDown
       OnMouseMove = Image1MouseMove
       OnMouseUp = Image1MouseUp
-      ExplicitLeft = 2
+      ExplicitLeft = -3
       ExplicitTop = -4
     end
     object Image: TImage
@@ -5633,7 +5618,7 @@ object Form2: TForm2
       TabOrder = 0
       Visible = False
       ExplicitLeft = 678
-      ExplicitHeight = 995
+      ExplicitHeight = 998
       object shp2: TShape
         AlignWithMargins = True
         Left = 6
@@ -5674,6 +5659,14 @@ object Form2: TForm2
         Align = alTop
         Caption = 'Pen Styles'
         ExplicitWidth = 50
+      end
+      object btn15: TSpeedButton
+        Left = 1
+        Top = 742
+        Width = 33
+        Height = 27
+        Caption = 'Color'
+        OnClick = btn15Click
       end
       object TScrollBox3: TScrollBox
         Left = 1
@@ -5747,7 +5740,7 @@ object Form2: TForm2
         Height = 204
         Align = alBottom
         TabOrder = 1
-        ExplicitTop = 790
+        ExplicitTop = 793
         object tlb4: TToolBar
           Left = 0
           Top = 176
@@ -5881,24 +5874,13 @@ object Form2: TForm2
         TabOrder = 6
         OnClick = ColorGrid1Click
       end
-      object pnl2: TPanel
-        Left = 1
-        Top = 742
-        Width = 49
-        Height = 41
-        BorderStyle = bsSingle
-        Caption = 'pnl2'
-        TabOrder = 7
-        StyleName = 'Windows'
-        OnDblClick = pnl2DblClick
-      end
       object ColorListBox1: TColorListBox
         Left = 1
         Top = 596
         Width = 139
         Height = 97
         Align = alTop
-        TabOrder = 8
+        TabOrder = 7
         OnClick = ColorListBox1Click
       end
       object ListBoxPenStyles: TListBox
@@ -5916,7 +5898,7 @@ object Form2: TForm2
           'DashDot'
           'DashDotDot'
           'Inside Frame')
-        TabOrder = 9
+        TabOrder = 8
         OnClick = ListBoxPenStylesClick
       end
     end
@@ -5931,7 +5913,7 @@ object Form2: TForm2
       Images = ImageList1
       TabOrder = 1
       ExplicitLeft = 824
-      ExplicitHeight = 1000
+      ExplicitHeight = 1003
       object btn1: TToolButton
         Left = 0
         Top = 0
@@ -5988,7 +5970,6 @@ object Form2: TForm2
       Caption = 'Edit'
       object mniC2: TMenuItem
         Caption = 'Save to clipboard'
-        OnClick = mniC2Click
       end
       object mniO2: TMenuItem
         Caption = 'Open clipboard'
@@ -6059,6 +6040,10 @@ object Form2: TForm2
     end
     object Settings1: TMenuItem
       Caption = 'Settings'
+      object mniB4: TMenuItem
+        Caption = 'Brushes'
+        OnClick = mniB4Click
+      end
     end
     object mniPenstyles1: TMenuItem
       Caption = 'Pen styles'
@@ -7087,8 +7072,8 @@ object Form2: TForm2
     Top = 424
   end
   object TActionList: TActionList
-    Left = 400
-    Top = 352
+    Left = 424
+    Top = 256
     object actPen: TAction
       Category = 'Painting'
       Caption = 'actPen'
@@ -7122,5 +7107,10 @@ object Form2: TForm2
     Font.Style = []
     Left = 537
     Top = 645
+  end
+  object smvrsnf1: TSMVersionInfo
+    FileName = 'Dimart.exe'
+    Left = 289
+    Top = 296
   end
 end

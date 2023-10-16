@@ -7,7 +7,8 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.ExtCtrls, Vcl.ExtDlgs,
   System.ImageList, Vcl.ImgList, Vcl.ComCtrls, Vcl.ToolWin, Vcl.StdCtrls,
   Vcl.Samples.Spin, jpeg, acPNG, System.Actions, Vcl.ActnList, Vcl.Buttons,
-  Vcl.OleCtrls, SHDocVw, Winapi.WebView2, Winapi.ActiveX, Vcl.Edge, Vcl.ColorGrd;
+  Vcl.OleCtrls, SHDocVw, Winapi.WebView2, Winapi.ActiveX, Vcl.Edge, Vcl.ColorGrd,
+  VersInfo;
 
 type
   TForm2 = class(TForm)
@@ -36,7 +37,6 @@ type
     btn10: TToolButton;
     btn12: TToolButton;
     btn14: TToolButton;
-    btn15: TToolButton;
     pnl1: TPanel;
     dlgColor: TColorDialog;
     trckbr1: TTrackBar;
@@ -106,7 +106,6 @@ type
     btn21: TToolButton;
     btn22: TToolButton;
     btn23: TToolButton;
-    btn24: TToolButton;
     LabInfo: TLabel;
     shp1: TShape;
     Label1: TLabel;
@@ -145,12 +144,14 @@ type
     Label10: TLabel;
     Filling_method: TListBox;
     ColorGrid1: TColorGrid;
-    pnl2: TPanel;
     ColorListBox1: TColorListBox;
     Image: TImage;
     mniN16: TMenuItem;
     ListBoxPenStyles: TListBox;
     Label9: TLabel;
+    smvrsnf1: TSMVersionInfo;
+    mniB4: TMenuItem;
+    btn15: TSpeedButton;
     procedure Exit1Click(Sender: TObject);
     procedure Open1Click(Sender: TObject);
     procedure Save1Click(Sender: TObject);
@@ -165,8 +166,6 @@ type
     procedure SpinEdit1Change(Sender: TObject);
     procedure pnlColor2Click(Sender: TObject);
     procedure btnClearClick(Sender: TObject);
-    procedure trckbr1Change(Sender: TObject);
-    procedure btn15Click(Sender: TObject);
     procedure btn14Click(Sender: TObject);
     procedure btnEraserClick(Sender: TObject);
     procedure ColorPaletteImageMouseDown(Sender: TObject; Button: TMouseButton;
@@ -215,7 +214,6 @@ type
     procedure btn22Click(Sender: TObject);
     procedure btn23Click(Sender: TObject);
     procedure mniO1Click(Sender: TObject);
-    procedure mniC2Click(Sender: TObject);
     procedure mniO2Click(Sender: TObject);
     procedure btn1Click(Sender: TObject);
     procedure btn18Click(Sender: TObject);
@@ -230,11 +228,12 @@ type
     procedure btn3Click(Sender: TObject);
     procedure rg1Click(Sender: TObject);
     procedure Filling_methodClick(Sender: TObject);
-    procedure pnl2DblClick(Sender: TObject);
     procedure ColorListBox1Click(Sender: TObject);
     procedure mniN16Click(Sender: TObject);
-    procedure FormShow(Sender: TObject);
     procedure ListBoxPenStylesClick(Sender: TObject);
+    procedure btn6Click(Sender: TObject);
+    procedure mniB4Click(Sender: TObject);
+    procedure btn15Click(Sender: TObject);
   private
     { Private declarations }
     procedure WhatTools(name: string);
@@ -244,6 +243,7 @@ type
     procedure ColorUpdate;
     procedure ColorUpdate2;
     procedure ResetPaintBox; //nowy plik
+    function BitmapToRgn(Image: TBitmap): HRGN;
     var
     Size: Boolean;
   end;
@@ -270,10 +270,11 @@ var
   MyRect, MyOther: TRect;
   scanline: PRGBQuad; //Dla wiadra
   grafika: TGraphic;
+  Origin2, MovePt: TPoint;
 implementation
 
 uses
-  about, hotkey, new_file;
+  about, hotkey, new_file, USettingsBrush;
 
 {$R *.dfm}
 
@@ -286,7 +287,7 @@ end;
 
 procedure TForm2.actBrushExecute(Sender: TObject);
 begin
-   tools := 1;
+   tools := 4;
    WhatTools('Selected brush tools');
 end;
 
@@ -306,6 +307,57 @@ procedure TForm2.actPipetteExecute(Sender: TObject);
 begin
   tools := 6;
   WhatTools('Selected pipette tools');
+end;
+
+function TForm2.BitmapToRgn(Image: TBitmap): HRGN;
+var
+  TmpRgn: HRGN;
+  x, y: integer;
+  ConsecutivePixels: integer;
+  CurrentPixel: TColor;
+  CreatedRgns: integer;
+  CurrentColor: TColor;
+begin
+    CreatedRgns := 0;
+  Result := CreateRectRgn(0, 0, Image.Width, Image.Height);
+  inc(CreatedRgns);
+
+  if (Image.Width = 0) or (Image.Height = 0) then
+    exit;
+
+  for y := 0 to Image.Height - 1 do
+  begin
+    CurrentColor := Image.Canvas.Pixels[0,y];
+    ConsecutivePixels := 1;
+    for x := 0 to Image.Width - 1 do
+    begin
+      CurrentPixel := Image.Canvas.Pixels[x,y];
+
+      if CurrentColor = CurrentPixel then
+        inc(ConsecutivePixels)
+      else
+      begin
+        // Входим в новую зону
+        if CurrentColor = clWhite then
+        begin
+          TmpRgn := CreateRectRgn(x-ConsecutivePixels, y, x, y+1);
+          CombineRgn(Result, Result, TmpRgn, RGN_DIFF);
+          inc(CreatedRgns);
+          DeleteObject(TmpRgn);
+        end;
+        CurrentColor := CurrentPixel;
+        ConsecutivePixels := 1;
+      end;
+    end;
+
+    if (CurrentColor = clWhite) and (ConsecutivePixels > 0) then
+    begin
+      TmpRgn := CreateRectRgn(x-ConsecutivePixels, y, x, y+1);
+      CombineRgn(Result, Result, TmpRgn, RGN_DIFF);
+      inc(CreatedRgns);
+      DeleteObject(TmpRgn);
+    end;
+  end;
 end;
 
 procedure TForm2.btn10Click(Sender: TObject);
@@ -340,8 +392,13 @@ end;
 
 procedure TForm2.btn15Click(Sender: TObject);
 begin
-  tools := 1; //brush
-  WhatTools('Selected brush tools');
+   if colordialog1.Execute then
+   begin
+      //Image1.canvas.Pen.Color:=
+      //Label9.Caption := (colordialog1.Color);
+      Fincolor := colordialog1.Color;
+      //pnl2.Color := colordialog1.Color;
+   end;
 end;
 
 procedure TForm2.btn16Click(Sender: TObject);
@@ -390,6 +447,23 @@ procedure TForm2.btn22Click(Sender: TObject);
 begin
   tools := 20; //заполнение картинкой
   WhatTools('Selected brush заполнение картинкой');
+  if tools = 20 then
+  begin
+  if OPD.Execute then
+  begin
+    grafika := TBitmap.Create;
+    try
+      //grafika.LoadFromFile(ExtractFilePath(ParamStr(0))+'black_pedze1.bmp');
+      grafika.LoadFromFile(OPD.FileName);
+      image1.Canvas.StretchDraw(Image1.ClientRect, grafika);
+      //Image1.Canvas.CopyRect(Image1.Canvas);
+      finally
+      grafika.Free;
+      image.Canvas.Brush.Bitmap := nil;
+      end;
+    image1.Repaint;
+    end;
+  end;
 end;
 
 procedure TForm2.btn23Click(Sender: TObject);
@@ -444,6 +518,12 @@ if mmoKatLayers.Items.Text='' then
      //MessageDlg('Layers saved',mtInformation,[mbOk],0);  
 end;
 
+procedure TForm2.btn6Click(Sender: TObject);
+begin
+  tools := 9;
+  WhatTools('Selected Text tools');
+end;
+
 procedure TForm2.btn7Click(Sender: TObject);
 begin
  tools := 8;
@@ -460,6 +540,7 @@ procedure TForm2.btn9Click(Sender: TObject);
 begin
  tools := 4;
  WhatTools('Selected Circle tools');
+
 end;
 
 procedure TForm2.btnClearClick(Sender: TObject);
@@ -487,7 +568,7 @@ end;
 
 procedure TForm2.Exit1Click(Sender: TObject);
 begin
-Close;
+  Close;
 end;
 
 
@@ -585,26 +666,13 @@ end;
 procedure TForm2.FormCreate(Sender: TObject);
 
 begin
+ Caption := 'Dimart V. ' + smvrsnf1.FileVersion;
  Form2.Size := False;
  Black := 1; //kolor czarny
  White := 1.5; //kolor biały
  tools := 0;
  mmoKat1.Items := Screen.Fonts; //pokazuje czcionki
  painting := False;
- (*
- try
-    Bitmap := TBitmap.Create;
-    Bitmap.Transparent := True;
-    Bitmap.TransparentMode := tmAuto;
-    Bitmap.LoadFromFile('cc.bmp');
-    Bitmap.TransparentColor := clWhite;
- finally
-    Bitmap.Free;
- end;
- *)
-
-
-
 end;
 
 procedure TForm2.FormKeyPress(Sender: TObject; var Key: Char);
@@ -616,32 +684,6 @@ begin
     'P': actPen.Execute; //Pen
     'I':actPipette.Execute; //Pipette
   end;
-end;
-
-
-
-
-procedure TForm2.FormShow(Sender: TObject);
-begin
-(*
-  if Form2.Size = True then
-  begin
-    with Form2.image1 do
-    begin
-      picture := nil;
-      //Form4.seSpeenWidth.value := Form2.Image1.Width;
-      //Form4.seSpeenHeight.value := Form2.Image1.Height;
-      Form2.Image1.Width := Form4.seSpeenWidth.value;
-      Form2.Image1.Height := Form4.seSpeenHeight.value;
-    end;
-  end
-  else
-  begin
-    //MessageDlg('Powiadomienie','Brak rozmiaru', mtInformation,[mbok]);
- Application.MessageBox('Brak rozmiaru?',
-   'Uwaga', MB_OK + MB_ICONINFORMATION + MB_DEFBUTTON2 + MB_TOPMOST);
-  end;
- *)
 end;
 
 procedure TForm2.Image1Click(Sender: TObject);
@@ -693,19 +735,15 @@ painting := False;
      begin
        image1.Canvas.Brush.Color := Fincolor;
        image1.Canvas.FloodFill(ClientWidth div 2, ClientHeight div 2, clBlack, fsBorder);
-       //image1.Canvas.FloodFill(ClientWidth div 2, ClientHeight div 2, clBlack, fsSurface);
-
        end;
      if tools = 14 then
      begin
        image1.Canvas.Brush.Color := Fincolor;
        image1.Canvas.Pen.Color := clBlack;
        image1.Canvas.Rectangle(100, 100, x, y); // Нарисуйте контур
-       //image1.Canvas.FloodFill(ClientWidth div 2, ClientHeight div 2, clBlack, fsBorder);
        image1.Canvas.FloodFill(ClientWidth div 2, ClientHeight div 2, Fincolor, fsSurface);
-
        end;
-       //крутая заливкв
+     //cool fill
      if tools = 15 then
      begin
      image1.Canvas.FloodFill(ClientWidth div 2, ClientHeight div 2, PipetteСolor, fsBorder);
@@ -718,19 +756,13 @@ procedure TForm2.Image1MouseDown(Sender: TObject; Button: TMouseButton;
 Origin, MovePt: Real;
 
 begin
- painting := True;
- image1.Canvas.MoveTo(x,y);
-   if tools = 1 then
-   begin
-     image1.Canvas.Pen.Color := image1.Canvas.Pixels[x,y];
-     image1.Canvas.Pen.Color := Fincolor;
-
-   end;
+   painting := True;
+   image1.Canvas.MoveTo(x,y);
     //rectangle
     if tools = 5 then
     begin
       image1.Canvas.Pen.Color := image1.Canvas.Brush.Color;
-      image1.Repaint; //перерисовка кадра
+      image1.Repaint;
       image1.Canvas.Rectangle(mx, my, mx+1*trckbr1.Position, my + 1*trckbr1.Position);
       image1.Canvas.Pen.Color := Fincolor;
       image1.Canvas.Brush.Color := Fincolor;
@@ -745,7 +777,6 @@ begin
         image1.Canvas.Pen.Color := Fincolor;
         image1.Canvas.Ellipse(mx, my, mx + 1 * trckbr1.Position, my +1 * trckbr1.Position);
         //Fincolor := image1.Canvas.Pen.Color;
-
         image1.Repaint; //перерисовка кадра
      end;
 
@@ -753,12 +784,12 @@ begin
     begin
       if Tekst <>'' then
       begin
-          //Tekst := InputBox('New sentence','Enter a sentence','');
+      Tekst := InputBox('New sentence','Enter a sentence','');
         Image1.Canvas.Font.Charset := EASTEUROPE_CHARSET;
         Image1.Canvas.Font.Color := colorbrush;
         Image1.Canvas.Font.Height := trckbr1.Position;
         Image1.Canvas.Font.Style := [fsBold, fsItalic];
-         Image1.Canvas.TextFlags := ETO_CLIPPED and ETO_OPAQUE;
+        Image1.Canvas.TextFlags := ETO_CLIPPED and ETO_OPAQUE;
         Image1.Canvas.TextOut(X,Y, Tekst);
       end;
     end;
@@ -771,21 +802,8 @@ begin
        image1.Canvas.Rectangle(trckbrBrush.Position,trckbrBrush.Position,mx,my);
        image1.Repaint;
     end;
-    //Wypełnia obrazek
-     if tools = 20 then
-     begin
-       try
-          grafika := TBitmap.Create;
-          grafika.LoadFromFile(ExtractFilePath(ParamStr(0))+'black_pedze1.bmp');
-          image1.Canvas.StretchDraw(Image1.ClientRect, grafika);
-          //Image1.Canvas.CopyRect(Image1.Canvas);
-       finally
-          grafika.Free;
-          image.Canvas.Brush.Bitmap := nil;
-       end;
-          image1.Repaint;
-    end;
-    //круг и квадрат
+
+    //circle and square
      if tools = 22 then
      begin
        if Button=mbLeft then
@@ -827,21 +845,6 @@ begin
   //if tools = 1 then
    if painting = True then
    begin
-   (*
-      try
-      Image1.Canvas.Pen.Width := trckbr1.Position;
-      image1.Canvas.LineTo(x,y);
-      except
-      end;
-    *)
- if tools = 1 then
- begin
-   image1.Canvas.Pen.Color := Fincolor;
-   image1.Canvas.Pen.Color := image1.Canvas.Pixels[x,y];
-   //image1.Canvas.Pen.Mode := PmCopy;
-   image1.Repaint; //перерисовка кадра
- end;
-
    //Brush
    if tools = 2 then
    begin
@@ -906,34 +909,37 @@ begin
        //Image1.Canvas.Pen.Width := trckbr1.Position;
        image1.Canvas.LineTo(x,y);
        image1.Repaint; //перерисовка кадра
-
       end;
      end;
      //brush style
      if tools = 10 then
      begin
      //image1.Canvas.Rectangle(mx, my, mx + 1 * trckbr1.Position, my +1 * trckbr1.Position);
-      //ładuje pędzel
-
+     //ładuje pędzel
      try
+     (*
        MyRect.Top := 10; MyRect.Left := 10;
        MyRect.Bottom := 100; MyRect.Right := 100;
        MyOther.Top := 111; MyOther.Left := 10;
        MyOther.Bottom := 201; MyOther.Right := 100;
+      *)
        brush1 := TBitmap.Create;
        brush1.LoadFromFile(ExtractFilePath(ParamStr(0))+'black_pedze1.bmp');
-       //brush1.Transparent := True;
-      // brush1.TransparentMode := tmAuto;
-       //brush1.TransparentColor := clBlack;
+
+       brush1.Transparent := True;
+       brush1.TransparentMode := tmAuto;
+       brush1.TransparentColor := clWhite;
        image1.Canvas.Brush.Bitmap := brush1;
-       //image1.Canvas.Pen.Color := Fincolor;
-      //image1.Canvas.Brush.Color := Fincolor;
-      //image1.Canvas.Brush.Style := bsDiagCross;
+       //image1.Canvas.Brush.Color := Fincolor;
+      // image1.Canvas.Pen.Mode := PmMask;
+      // image1.Canvas.Pen.Color := Fincolor;
+      // image1.Canvas.Brush.Style := bsSolid;
+
        image1.Canvas.BrushCopy(MyRect, brush1, MyRect, clBlack);
        image1.Canvas.CopyRect(MyOther, brush1.Canvas, MyRect);
-       image1.Canvas.Fillrect(Rect(mx,my,trckbr1.Position,trckbr1.Position));
-      // image1.Canvas.LineTo(x,y);
-
+       image1.Canvas.Fillrect(Rect(mx, my, mx + 1 * trckbr1.Position, my + 1 * trckbr1.Position));
+       //BitmapToRgn(brush1);
+       image1.Repaint;
      finally
        brush1.Free;
        image1.Canvas.Brush.Bitmap := nil;
@@ -1001,7 +1007,7 @@ begin
        //image1.Canvas.PolyBezierTo([Point(mx,my),Point(mx + 1 * trckbrBrush.Position,my + 1 * trckbrBrush.Position),Point(100,200),Point(mx,my)]);
        image1.Repaint;
      end;
-       //Polygon
+     //Polygon
      if tools = 21 then
      begin
        image1.Canvas.Brush.Color := Fincolor;
@@ -1009,7 +1015,6 @@ begin
        image1.Canvas.Brush.Style := bsCross;
        image1.Canvas.PolyBezierTo([Point(mx,my),Point(mx + 1 * trckbrBrush.Position,my + 1 * trckbrBrush.Position),Point(mx,my)]);
        image1.Canvas.ClipRect;
-       //image1.Canvas.PolyBezierTo([Point(mx,my),Point(mx + 1 * trckbrBrush.Position,my + 1 * trckbrBrush.Position),Point(100,200),Point(mx,my)]);
        image1.Repaint;
      end;
     end;
@@ -1027,21 +1032,14 @@ begin
  image1.Canvas.CopyMode := cmBlackness;
 end;
 
+procedure TForm2.mniB4Click(Sender: TObject);
+begin
+   fSettingsBrush.ShowModal;
+end;
+
 procedure TForm2.mnic1Click(Sender: TObject);
 begin
   Image1.Canvas.Pen.Style := psDashDotDot;
-end;
-
-procedure TForm2.mniC2Click(Sender: TObject);
-begin
-try
-// if SupportsClipboardFormat then
-
-  //Image1.Picture.SaveToClipboardFormat(CF_BITMAP);
-finally
-
-end;
-
 end;
 
 procedure TForm2.mniH1Click(Sender: TObject);
@@ -1063,7 +1061,7 @@ end;
 procedure TForm2.mniN10Click(Sender: TObject);
 begin
   image1.Canvas.Pen.Mode := PmNotXor;
-  WhatTools('Selected brush PmNotXor Восстанавливает точки');
+  WhatTools('Selected brush PmNotXor Restores points');
 end;
 
 procedure TForm2.mniN11Click(Sender: TObject);
@@ -1121,19 +1119,19 @@ end;
 procedure TForm2.mniN3Click(Sender: TObject);
 begin
     image1.Canvas.Pen.Mode := PmMaskPenNot;
-     WhatTools('Selected brush Конъюнкция');
+     WhatTools('Selected brush Conjunction');
 end;
 
 procedure TForm2.mniN4Click(Sender: TObject);
 begin
   image1.Canvas.Pen.Mode := PmMergePenNot;
-  WhatTools('Selected brush Дизъюнция цвета пера и цвета');
+  WhatTools('Selected brush Disjunction of pen color and color');
 end;
 
 procedure TForm2.mniN5Click(Sender: TObject);
 begin
   image1.Canvas.Pen.Mode := PmMaskNotPen;
-  WhatTools('Selected brush Конюнкция цвета пера и цвета пера');
+  WhatTools('Selected brush Conjunction of pen color and pen color');
 end;
 
 procedure TForm2.mniN6Click(Sender: TObject);
@@ -1172,8 +1170,6 @@ begin
       Bitmap2.Dormant;
       Bitmap2.TRANSPARENT := True;
       Bitmap2.TransparentColor := Bitmap2.Canvas.Pixels[50,50];
-
-      //освобождает память
       Bitmap2.FreeImage;
       Canvas.Draw(Image1.Height, Image1.Width, Bitmap2);
       image1.Canvas.StretchDraw(Image1.ClientRect, Bitmap1);
@@ -1230,7 +1226,7 @@ end;
 procedure TForm2.ColorListBox1Click(Sender: TObject);
 begin
   Fincolor := ColorListBox1.Selected;
-  pnl2.Color := ColorListBox1.Selected;
+  //pnl2.Color := ColorListBox1.Selected;
 end;
 
 procedure TForm2.ColorPaletteImageClick(Sender: TObject);
@@ -1367,18 +1363,6 @@ begin
   end;
 end;
 
-procedure TForm2.pnl2DblClick(Sender: TObject);
-begin
- if colordialog1.Execute then
- begin
-    //Image1.canvas.Pen.Color:=
-    //Label9.Caption := (colordialog1.Color);
-    Fincolor := colordialog1.Color;
-    pnl2.Color := colordialog1.Color;
- end;
-
-end;
-
 procedure TForm2.pnlBlackClick(Sender: TObject);
 begin
   tools := 4;
@@ -1456,17 +1440,6 @@ begin
   except
 
   end;
-end;
-
-procedure TForm2.trckbr1Change(Sender: TObject);
-begin
- (*
- try
- Image1.Canvas.Pen.Width := trckbr1.Position;
-  except
-
-  end;
-  *)
 end;
 
 procedure TForm2.WhatTools(name: string);
