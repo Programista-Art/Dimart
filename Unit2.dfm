@@ -5402,17 +5402,23 @@ object Form2: TForm2
     object btn9: TToolButton
       Left = 0
       Top = 110
+      Hint = 'Round brush'
       Caption = 'btn9'
       ImageIndex = 21
+      ParentShowHint = False
       Wrap = True
+      ShowHint = True
       OnClick = btn9Click
     end
     object btn12: TToolButton
       Left = 0
       Top = 132
+      Hint = 'Square brush'
       Caption = 'btn12'
       ImageIndex = 22
+      ParentShowHint = False
       Wrap = True
+      ShowHint = True
       OnClick = btn12Click
     end
     object btn10: TToolButton
@@ -5667,8 +5673,7 @@ object Form2: TForm2
         Margins.Bottom = 5
         Align = alTop
         Caption = 'Pen Styles'
-        ExplicitLeft = 9
-        ExplicitTop = 458
+        ExplicitWidth = 50
       end
       object TScrollBox3: TScrollBox
         Left = 1
@@ -5895,7 +5900,6 @@ object Form2: TForm2
         Align = alTop
         TabOrder = 8
         OnClick = ColorListBox1Click
-        ExplicitTop = 471
       end
       object ListBoxPenStyles: TListBox
         Left = 1
@@ -5914,8 +5918,6 @@ object Form2: TForm2
           'Inside Frame')
         TabOrder = 9
         OnClick = ListBoxPenStylesClick
-        ExplicitLeft = 9
-        ExplicitTop = 471
       end
     end
     object tlb2: TToolBar
@@ -6012,35 +6014,35 @@ object Form2: TForm2
         OnClick = mniP2Click
       end
       object mniN3: TMenuItem
-        Caption = #1050#1086#1085#1098#1102#1085#1082#1094#1080#1103
+        Caption = 'Conjunction'
         OnClick = mniN3Click
       end
       object mniN4: TMenuItem
-        Caption = #1044#1080#1079#1098#1102#1085#1094#1080#1103' '#1094#1074#1077#1090#1072' '#1087#1077#1088#1072' '#1080' '#1094#1074#1077#1090#1072
+        Caption = 'Disjunction of pen color and color'
         OnClick = mniN4Click
       end
       object mniN5: TMenuItem
-        Caption = #1050#1086#1085#1102#1085#1082#1094#1080#1103' '#1094#1074#1077#1090#1072' '#1087#1077#1088#1072' '#1080' '#1094#1074#1077#1090#1072' '#1087#1077#1088#1072
+        Caption = 'Conjunction of pen color and pen color'
         OnClick = mniN5Click
       end
       object mniN6: TMenuItem
-        Caption = #1044#1080#1079#1098#1102#1085#1094#1080#1103' '#1094#1074#1077#1090#1072' '#1087#1077#1088#1072' '#1080' '#1094#1074#1077#1090#1072' '#1101#1077#1088#1072#1085#1072
+        Caption = 'Disjunction between pen color and screen color'
         OnClick = mniN6Click
       end
       object mniN7: TMenuItem
-        Caption = #1048#1085#1074#1077#1088#1089#1080#1103' '#1076#1080#1079#1098#1102#1085#1094#1080#1080' '#1094#1074#1077#1090#1072' '#1087#1077#1088#1072' '#1080' '#1094#1074#1077#1090#1072' '#1101#1082#1088#1072#1085#1072
+        Caption = 'Inversion of the disjunction between pen color and screen color'
         OnClick = mniN7Click
       end
       object mniN8: TMenuItem
-        Caption = #1050#1086#1085#1098#1102#1085#1082#1094#1080#1103' '#1094#1074#1077#1090#1086#1074' '#1087#1077#1088#1072'  '#1080' '#1101#1082#1088#1072#1085#1072
+        Caption = 'The combination of pen and screen colors'
         OnClick = mniN8Click
       end
       object mniN9: TMenuItem
-        Caption = #1048#1085#1074#1077#1088#1089#1080#1103' '#1076#1080#1079#1098#1102#1085#1094#1080#1080' '#1094#1074#1077#1090#1072' '#1087#1077#1088#1072' '#1080' '#1094#1074#1077#1090#1072' '#1101#1082#1088#1072#1085#1072
+        Caption = 'Inversion of the disjunction between pen color and screen color'
         OnClick = mniN9Click
       end
       object mniN10: TMenuItem
-        Caption = #1042#1086#1089#1089#1090#1072#1085#1072#1074#1083#1080#1074#1072#1077#1090' '#1090#1086#1095#1082#1080
+        Caption = 'Restores points'
         OnClick = mniN10Click
       end
     end
