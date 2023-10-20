@@ -3,9 +3,9 @@ object Form2: TForm2
   Top = 0
   Cursor = crCross
   BorderStyle = bsSingle
-  Caption = 'Dimart V 0.0.0.1'
-  ClientHeight = 1026
-  ClientWidth = 1061
+  Caption = ' '
+  ClientHeight = 1022
+  ClientWidth = 1057
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -13,16 +13,16 @@ object Form2: TForm2
   Font.Name = 'Tahoma'
   Font.Style = []
   Menu = MainMenu1
-  Position = poMainFormCenter
+  Position = poDesigned
   WindowState = wsMaximized
   OnCreate = FormCreate
   OnKeyPress = FormKeyPress
   TextHeight = 13
   object Panel1: TPanel
-    Left = 880
+    Left = 876
     Top = 0
     Width = 181
-    Height = 1008
+    Height = 1004
     Align = alRight
     Color = clSilver
     Font.Charset = DEFAULT_CHARSET
@@ -33,8 +33,8 @@ object Form2: TForm2
     ParentBackground = False
     ParentFont = False
     TabOrder = 0
-    ExplicitLeft = 876
-    ExplicitHeight = 1007
+    ExplicitLeft = 872
+    ExplicitHeight = 1000
     object Label2: TLabel
       AlignWithMargins = True
       Left = 6
@@ -46,14 +46,14 @@ object Form2: TForm2
       Margins.Right = 5
       Margins.Bottom = 5
       Align = alTop
-      Caption = 'Jaskrawo'#347#263
+      Caption = 'Brightness'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -16
       Font.Name = 'Tahoma'
       Font.Style = []
       ParentFont = False
-      ExplicitWidth = 79
+      ExplicitWidth = 73
     end
     object Label3: TLabel
       AlignWithMargins = True
@@ -5216,7 +5216,7 @@ object Form2: TForm2
       Height = 36
       Align = alTop
       Max = 255
-      Min = 1
+      Min = 2
       Position = 40
       TabOrder = 0
     end
@@ -5259,7 +5259,7 @@ object Form2: TForm2
       TabOrder = 3
       object Label5: TLabel
         Left = 10
-        Top = 11
+        Top = 15
         Width = 10
         Height = 19
         Caption = 'R'
@@ -5272,7 +5272,7 @@ object Form2: TForm2
       end
       object Label6: TLabel
         Left = 10
-        Top = 36
+        Top = 39
         Width = 11
         Height = 19
         Caption = 'G'
@@ -5285,7 +5285,7 @@ object Form2: TForm2
       end
       object Label7: TLabel
         Left = 10
-        Top = 61
+        Top = 66
         Width = 9
         Height = 19
         Caption = 'B'
@@ -5346,12 +5346,12 @@ object Form2: TForm2
     Left = 0
     Top = 0
     Width = 25
-    Height = 1008
+    Height = 1004
     Align = alLeft
     Caption = 'tlb1'
     Images = ImageList1
     TabOrder = 1
-    ExplicitHeight = 1007
+    ExplicitHeight = 1000
     object btn22: TToolButton
       Left = 0
       Top = 0
@@ -5461,7 +5461,7 @@ object Form2: TForm2
     object btn11: TToolButton
       Left = 0
       Top = 242
-      Hint = 'Wiadro zwyk'#322'e'
+      Hint = 'Filling floodFill basic'
       Caption = 'btn11'
       ImageIndex = 23
       ParentShowHint = False
@@ -5472,7 +5472,7 @@ object Form2: TForm2
     object btn13: TToolButton
       Left = 0
       Top = 264
-      Hint = 'Wiadro FloodFill'
+      Hint = 'Filling floodFill'
       Caption = 'btn13'
       ImageIndex = 23
       ParentShowHint = False
@@ -5483,7 +5483,7 @@ object Form2: TForm2
     object btn16: TToolButton
       Left = 0
       Top = 286
-      Hint = 'Wiadro '#1089' '#1077#1086#1088#1084#1072#1083#1100#1077#1086#1081' '#1079#1072#1083#1080#1074#1082#1086#1081
+      Hint = 'Willing'
       Caption = 'btn16'
       ImageIndex = 23
       ParentShowHint = False
@@ -5543,17 +5543,17 @@ object Form2: TForm2
   end
   object pnl1: TPanel
     Left = 0
-    Top = 1008
-    Width = 1061
+    Top = 1004
+    Width = 1057
     Height = 18
     Align = alBottom
     TabOrder = 2
-    ExplicitTop = 1007
-    ExplicitWidth = 1057
+    ExplicitTop = 1000
+    ExplicitWidth = 1053
     object statInfoPanel: TStatusBar
       Left = 1
       Top = -2
-      Width = 1059
+      Width = 1055
       Height = 19
       Panels = <
         item
@@ -5569,25 +5569,26 @@ object Form2: TForm2
           Width = 200
         end
         item
+          Text = 'Color'
           Width = 150
         end>
-      ExplicitWidth = 1055
+      ExplicitWidth = 1051
     end
   end
   object TScrollBox2: TScrollBox
     Left = 25
     Top = 0
-    Width = 855
-    Height = 1008
+    Width = 851
+    Height = 1004
     Align = alClient
     TabOrder = 3
-    ExplicitWidth = 851
-    ExplicitHeight = 1007
+    ExplicitWidth = 847
+    ExplicitHeight = 1000
     object Image1: TImage
       Left = 0
       Top = 0
-      Width = 677
-      Height = 1004
+      Width = 673
+      Height = 1000
       Cursor = crArrow
       Align = alClient
       OnClick = Image1Click
@@ -5596,6 +5597,8 @@ object Form2: TForm2
       OnMouseUp = Image1MouseUp
       ExplicitLeft = -3
       ExplicitTop = -4
+      ExplicitWidth = 677
+      ExplicitHeight = 1004
     end
     object Image: TImage
       Left = 216
@@ -5605,10 +5608,10 @@ object Form2: TForm2
     end
     object pnlBrushers: TPanel
       AlignWithMargins = True
-      Left = 682
+      Left = 678
       Top = 0
       Width = 141
-      Height = 999
+      Height = 995
       Margins.Left = 5
       Margins.Top = 0
       Margins.Right = 5
@@ -5617,8 +5620,8 @@ object Form2: TForm2
       Enabled = False
       TabOrder = 0
       Visible = False
-      ExplicitLeft = 678
-      ExplicitHeight = 998
+      ExplicitLeft = 674
+      ExplicitHeight = 991
       object shp2: TShape
         AlignWithMargins = True
         Left = 6
@@ -5664,7 +5667,7 @@ object Form2: TForm2
         Left = 1
         Top = 742
         Width = 33
-        Height = 27
+        Height = 22
         Caption = 'Color'
         OnClick = btn15Click
       end
@@ -5735,12 +5738,12 @@ object Form2: TForm2
       end
       object TScrollBox4: TScrollBox
         Left = 1
-        Top = 794
+        Top = 790
         Width = 139
         Height = 204
         Align = alBottom
         TabOrder = 1
-        ExplicitTop = 793
+        ExplicitTop = 786
         object tlb4: TToolBar
           Left = 0
           Top = 176
@@ -5867,7 +5870,7 @@ object Form2: TForm2
       end
       object ColorGrid1: TColorGrid
         Left = 1
-        Top = 698
+        Top = 696
         Width = 136
         Height = 38
         GridOrdering = go8x2
@@ -5901,19 +5904,26 @@ object Form2: TForm2
         TabOrder = 8
         OnClick = ListBoxPenStylesClick
       end
+      object edForegroundColor: TEdit
+        Left = 36
+        Top = 742
+        Width = 100
+        Height = 21
+        TabOrder = 9
+      end
     end
     object tlb2: TToolBar
-      Left = 828
+      Left = 824
       Top = 0
       Width = 23
-      Height = 1004
+      Height = 1000
       Align = alRight
       Caption = 'tlb2'
       HotImages = ImageList1
       Images = ImageList1
       TabOrder = 1
-      ExplicitLeft = 824
-      ExplicitHeight = 1003
+      ExplicitLeft = 820
+      ExplicitHeight = 996
       object btn1: TToolButton
         Left = 0
         Top = 0

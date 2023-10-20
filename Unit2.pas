@@ -152,6 +152,7 @@ type
     smvrsnf1: TSMVersionInfo;
     mniB4: TMenuItem;
     btn15: TSpeedButton;
+    edForegroundColor: TEdit;
     procedure Exit1Click(Sender: TObject);
     procedure Open1Click(Sender: TObject);
     procedure Save1Click(Sender: TObject);
@@ -237,7 +238,10 @@ type
   private
     { Private declarations }
     procedure WhatTools(name: string);
+    procedure WhatColors;
     procedure ProgressUpdate;
+    procedure ColorConvertHex;
+    function HexStrToInt(const str: string): Integer;//Konwertacja koloru z Hex w liczbę
   public
     { Public declarations }
     procedure ColorUpdate;
@@ -398,6 +402,14 @@ begin
       //Label9.Caption := (colordialog1.Color);
       Fincolor := colordialog1.Color;
       //pnl2.Color := colordialog1.Color;
+      //ColorGrid1.colors.AddColor(NewColor);
+        // Добавьте новый цвет в TColorGrid
+  //ColorGrid1.DefaultColors.AddColor(NewColor);
+
+  // Обновите TColorGrid, чтобы новый цвет отобразился
+
+     edForegroundColor.Text := ColorToString(Fincolor);
+     ColorGrid1.Invalidate;
    end;
 end;
 
@@ -520,8 +532,9 @@ end;
 
 procedure TForm2.btn6Click(Sender: TObject);
 begin
-  tools := 9;
   WhatTools('Selected Text tools');
+  Tekst := InputBox('New sentence','Enter a sentence','');
+  tools := 9;
 end;
 
 procedure TForm2.btn7Click(Sender: TObject);
@@ -666,24 +679,31 @@ end;
 procedure TForm2.FormCreate(Sender: TObject);
 
 begin
- Caption := 'Dimart V. ' + smvrsnf1.FileVersion;
- Form2.Size := False;
- Black := 1; //kolor czarny
- White := 1.5; //kolor biały
- tools := 0;
- mmoKat1.Items := Screen.Fonts; //pokazuje czcionki
- painting := False;
+  Caption := 'Dimart V. ' + smvrsnf1.FileVersion;
+  Form2.Size := False;
+  Black := 1; //kolor czarny
+  White := 1.5; //kolor biały
+  tools := 0;
+  mmoKat1.Items := Screen.Fonts; //pokazuje czcionki
+  painting := False;
+  pnlBrushers.Enabled := True;
+  pnlBrushers.Visible := True;
 end;
 
 procedure TForm2.FormKeyPress(Sender: TObject; var Key: Char);
 begin
-    //Hot Keys
-    case Key of
+  //Hot Keys
+  case Key of
     'B': actBrush.Execute; //Brush
     'E': actEraser.Execute; //Eraser
     'P': actPen.Execute; //Pen
     'I':actPipette.Execute; //Pipette
   end;
+end;
+
+function TForm2.HexStrToInt(const str: string): Integer;
+begin
+  Result := StrToInt('$' + str);
 end;
 
 procedure TForm2.Image1Click(Sender: TObject);
@@ -784,7 +804,7 @@ begin
     begin
       if Tekst <>'' then
       begin
-      Tekst := InputBox('New sentence','Enter a sentence','');
+        //Tekst := InputBox('New sentence','Enter a sentence','');
         Image1.Canvas.Font.Charset := EASTEUROPE_CHARSET;
         Image1.Canvas.Font.Color := colorbrush;
         Image1.Canvas.Font.Height := trckbr1.Position;
@@ -1201,25 +1221,25 @@ end;
 procedure TForm2.mniX1Click(Sender: TObject);
 begin
   image1.Canvas.Pen.Mode := PmXor;
-   WhatTools('Selected brush PmXor');
+  WhatTools('Selected brush PmXor');
+end;
+
+procedure TForm2.ColorConvertHex;
+begin
+  case ColorGrid1.ForegroundIndex of
+  0..16:
+    if ColorGrid1.ColorToIndex(HexStrToInt(edForegroundColor.Text)) <> -1 then
+    ColorGrid1.ForegroundIndex := ColorGrid1.ColorToIndex
+    (HexStrToInt(edForegroundColor.Text));
+  end;
 end;
 
 procedure TForm2.ColorGrid1Click(Sender: TObject);
 begin
-    if ColorGrid1.ForegroundIndex = 0 then
-  begin
-    Label9.Caption := 'Selected Color Black';
-    Fincolor := clBlack;
-  end
-  else if ColorGrid1.ForegroundIndex = 1 then
-  begin
-    Label9.Caption := 'Selected Color Red';
-    Fincolor := clRed;
-  end
-  else if ColorGrid1.ForegroundIndex = 2 then
-  begin
-    Label9.Caption := 'Selected Color Red';
-    Fincolor := clGreen;
+  case ColorGrid1.ForegroundIndex of
+  0..16:
+    WhatColors;
+
   end;
 end;
 
@@ -1440,6 +1460,12 @@ begin
   except
 
   end;
+end;
+
+procedure TForm2.WhatColors;
+begin
+  Fincolor := ColorGrid1.ForegroundColor;
+  statInfoPanel.Panels[3].Text := 'Selected Color ' + ColorToString(Fincolor);
 end;
 
 procedure TForm2.WhatTools(name: string);
