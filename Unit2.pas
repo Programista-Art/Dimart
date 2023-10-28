@@ -153,6 +153,8 @@ type
     mniB4: TMenuItem;
     btn15: TSpeedButton;
     edForegroundColor: TEdit;
+    mniS1: TMenuItem;
+    mniF3: TMenuItem;
     procedure Exit1Click(Sender: TObject);
     procedure Open1Click(Sender: TObject);
     procedure Save1Click(Sender: TObject);
@@ -204,7 +206,6 @@ type
     procedure mniN11Click(Sender: TObject);
     procedure mniN12Click(Sender: TObject);
     procedure btn4Click(Sender: TObject);
-    procedure mniB3Click(Sender: TObject);
     procedure btn11Click(Sender: TObject);
     procedure btn13Click(Sender: TObject);
     procedure btn16Click(Sender: TObject);
@@ -275,6 +276,12 @@ var
   scanline: PRGBQuad; //Dla wiadra
   grafika: TGraphic;
   Origin2, MovePt: TPoint;
+  //Image
+  icoImage: TIcon;
+  jpgImage: TJPEGImage;
+  jpgImage1: TJPEGImage;
+  points: array of TPoint;
+
 implementation
 
 uses
@@ -1030,13 +1037,26 @@ begin
      //Polygon
      if tools = 21 then
      begin
+       SetLength(Points, 4);
+       Points[0] := Point(10, 20);
+       Points[1] := Point(30, 40);
+       Points[2] := Point(50, 60);
+       Points[3] := Point(70, 30);
+
+
        image1.Canvas.Brush.Color := Fincolor;
        image1.Canvas.Pen.Color := Fincolor;
-       image1.Canvas.Brush.Style := bsCross;
-       image1.Canvas.PolyBezierTo([Point(mx,my),Point(mx + 1 * trckbrBrush.Position,my + 1 * trckbrBrush.Position),Point(mx,my)]);
-       image1.Canvas.ClipRect;
+       //image1.Canvas.Polygon([Points[0](mx,my),Points[1](mx + 1 * trckbrBrush.Position,my + 1 * trckbrBrush.Position),Point(mx,my)]);
+       Image1.Canvas.Polygon(Points);
+       image1.Canvas.Pen.Width := trckbrBrush.Position;
+       image1.Canvas.Pen.Style := psSolid;
+       //image1.Canvas.Brush.Style := bsCross;
+       //image1.Canvas.ClipRect;
+        image1.Canvas.LineTo(x,y);
        image1.Repaint;
+
      end;
+
     end;
 end;
 
@@ -1046,11 +1066,6 @@ begin
  painting := False;
 end;
 
-
-procedure TForm2.mniB3Click(Sender: TObject);
-begin
- image1.Canvas.CopyMode := cmBlackness;
-end;
 
 procedure TForm2.mniB4Click(Sender: TObject);
 begin
@@ -1095,7 +1110,7 @@ begin
 end;
 
 procedure TForm2.mniN13Click(Sender: TObject);
-begin
+BEGIN
   Image1.Canvas.Pen.Style := psDot;
 end;
 
@@ -1181,24 +1196,28 @@ end;
 procedure TForm2.mniO1Click(Sender: TObject);
 begin
    if OPD.Execute then
+   begin
+     Bitmap1 := TBitmap.Create;
+     Bitmap2 := TBitmap.Create;
+     icoImage := TIcon.Create;
+     jpgImage := TJPEGImage.Create;
+     jpgImage1 := TJPEGImage.Create;
    try
-      Bitmap1 := TBitmap.Create;
-      Bitmap2 := TBitmap.Create;
-      //grafika := TBitmap.Create;
-      Bitmap1.LoadFromFile(OPD.FileName);
+     Bitmap1.LoadFromFile(OPD.FileName);
       Bitmap2.Assign(Bitmap1);
-      Bitmap2.Dormant;
-      Bitmap2.TRANSPARENT := True;
-      Bitmap2.TransparentColor := Bitmap2.Canvas.Pixels[50,50];
-      Bitmap2.FreeImage;
-      Canvas.Draw(Image1.Height, Image1.Width, Bitmap2);
-      image1.Canvas.StretchDraw(Image1.ClientRect, Bitmap1);
-      Bitmap2.TransparentMode := tmAuto;
-      Bitmap2.TransparentColor := clDefault;
-      //Image1.Canvas.CopyRect(Image.Canvas);
+      Bitmap2.Transparent := True;
+      Bitmap2.TransparentColor := clWhite;
+      Image1.Canvas.Draw(Image1.Left, Image1.Top, Bitmap2);
+      //Image1.Canvas.Draw(100, 100, Bitmap2);
+      Image1.Canvas.StretchDraw(Image1.ClientRect, Bitmap1);
+
    finally
       Bitmap1.Free;
       Bitmap1.Free;
+      icoImage.Free;
+      jpgImage.Free;
+      jpgImage1.Free;
+   end;
    end;
 end;
 

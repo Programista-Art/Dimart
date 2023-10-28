@@ -4,8 +4,8 @@ object Form2: TForm2
   Cursor = crCross
   BorderStyle = bsSingle
   Caption = ' '
-  ClientHeight = 1022
-  ClientWidth = 1057
+  ClientHeight = 1018
+  ClientWidth = 1053
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,10 +19,10 @@ object Form2: TForm2
   OnKeyPress = FormKeyPress
   TextHeight = 13
   object Panel1: TPanel
-    Left = 876
+    Left = 872
     Top = 0
     Width = 181
-    Height = 1004
+    Height = 1000
     Align = alRight
     Color = clSilver
     Font.Charset = DEFAULT_CHARSET
@@ -33,8 +33,8 @@ object Form2: TForm2
     ParentBackground = False
     ParentFont = False
     TabOrder = 0
-    ExplicitLeft = 872
-    ExplicitHeight = 1000
+    ExplicitLeft = 868
+    ExplicitHeight = 996
     object Label2: TLabel
       AlignWithMargins = True
       Left = 6
@@ -5346,12 +5346,12 @@ object Form2: TForm2
     Left = 0
     Top = 0
     Width = 25
-    Height = 1004
+    Height = 1000
     Align = alLeft
     Caption = 'tlb1'
     Images = ImageList1
     TabOrder = 1
-    ExplicitHeight = 1000
+    ExplicitHeight = 996
     object btn22: TToolButton
       Left = 0
       Top = 0
@@ -5543,17 +5543,17 @@ object Form2: TForm2
   end
   object pnl1: TPanel
     Left = 0
-    Top = 1004
-    Width = 1057
+    Top = 1000
+    Width = 1053
     Height = 18
     Align = alBottom
     TabOrder = 2
-    ExplicitTop = 1000
-    ExplicitWidth = 1053
+    ExplicitTop = 996
+    ExplicitWidth = 1049
     object statInfoPanel: TStatusBar
       Left = 1
       Top = -2
-      Width = 1055
+      Width = 1051
       Height = 19
       Panels = <
         item
@@ -5572,23 +5572,23 @@ object Form2: TForm2
           Text = 'Color'
           Width = 150
         end>
-      ExplicitWidth = 1051
+      ExplicitWidth = 1047
     end
   end
   object TScrollBox2: TScrollBox
     Left = 25
     Top = 0
-    Width = 851
-    Height = 1004
+    Width = 847
+    Height = 1000
     Align = alClient
     TabOrder = 3
-    ExplicitWidth = 847
-    ExplicitHeight = 1000
+    ExplicitWidth = 843
+    ExplicitHeight = 996
     object Image1: TImage
       Left = 0
       Top = 0
-      Width = 673
-      Height = 1000
+      Width = 669
+      Height = 996
       Cursor = crArrow
       Align = alClient
       OnClick = Image1Click
@@ -5608,10 +5608,10 @@ object Form2: TForm2
     end
     object pnlBrushers: TPanel
       AlignWithMargins = True
-      Left = 678
+      Left = 674
       Top = 0
       Width = 141
-      Height = 995
+      Height = 991
       Margins.Left = 5
       Margins.Top = 0
       Margins.Right = 5
@@ -5620,8 +5620,8 @@ object Form2: TForm2
       Enabled = False
       TabOrder = 0
       Visible = False
-      ExplicitLeft = 674
-      ExplicitHeight = 991
+      ExplicitLeft = 670
+      ExplicitHeight = 987
       object shp2: TShape
         AlignWithMargins = True
         Left = 6
@@ -5738,12 +5738,12 @@ object Form2: TForm2
       end
       object TScrollBox4: TScrollBox
         Left = 1
-        Top = 790
+        Top = 786
         Width = 139
         Height = 204
         Align = alBottom
         TabOrder = 1
-        ExplicitTop = 786
+        ExplicitTop = 782
         object tlb4: TToolBar
           Left = 0
           Top = 176
@@ -5913,17 +5913,17 @@ object Form2: TForm2
       end
     end
     object tlb2: TToolBar
-      Left = 824
+      Left = 820
       Top = 0
       Width = 23
-      Height = 1000
+      Height = 996
       Align = alRight
       Caption = 'tlb2'
       HotImages = ImageList1
       Images = ImageList1
       TabOrder = 1
-      ExplicitLeft = 820
-      ExplicitHeight = 996
+      ExplicitLeft = 816
+      ExplicitHeight = 992
       object btn1: TToolButton
         Left = 0
         Top = 0
@@ -5967,6 +5967,9 @@ object Form2: TForm2
         Caption = 'Open pictures'
         OnClick = mniO1Click
       end
+      object mniS1: TMenuItem
+        Caption = 'Save clipboard'
+      end
       object Save1: TMenuItem
         Caption = 'Save as'
         OnClick = Save1Click
@@ -5984,6 +5987,9 @@ object Form2: TForm2
       object mniO2: TMenuItem
         Caption = 'Open clipboard'
         OnClick = mniO2Click
+      end
+      object mniF3: TMenuItem
+        Caption = 'Format image 8 bit'
       end
     end
     object mniF1: TMenuItem
@@ -6090,7 +6096,6 @@ object Form2: TForm2
       Caption = 'Image filter'
       object mniB3: TMenuItem
         Caption = 'Black and White'
-        OnClick = mniB3Click
       end
       object mniI1: TMenuItem
         Caption = 'Inversions'
@@ -6112,7 +6117,7 @@ object Form2: TForm2
     end
   end
   object OPD: TOpenPictureDialog
-    DefaultExt = '*.jpg'
+    DefaultExt = '*.bmp'
     Filter = 
       'JPEG Image File (*.jpg)|*.jpg|Portable network graphics (AlphaCo' +
       'ntrols) (*.png)|*.png|Scalable Vector Graphics (*.svg)|*.svg|JPE' +
@@ -6123,7 +6128,7 @@ object Form2: TForm2
     Top = 184
   end
   object SPD: TSavePictureDialog
-    DefaultExt = '*.jpg'
+    DefaultExt = '*.bmp'
     FileName = 'picture'
     Filter = 
       'JPEG Image File (*.jpg)|*.jpg|Portable network graphics (AlphaCo' +
