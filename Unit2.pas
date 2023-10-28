@@ -153,6 +153,7 @@ type
     mniB4: TMenuItem;
     btn15: TSpeedButton;
     edForegroundColor: TEdit;
+    mniS1: TMenuItem;
     procedure Exit1Click(Sender: TObject);
     procedure Open1Click(Sender: TObject);
     procedure Save1Click(Sender: TObject);
@@ -275,6 +276,10 @@ var
   scanline: PRGBQuad; //Dla wiadra
   grafika: TGraphic;
   Origin2, MovePt: TPoint;
+  //Image
+  icoImage: TIcon;
+  jpgImage: TJPEGImage;
+  jpgImage1: TJPEGImage;
 implementation
 
 uses
@@ -1181,24 +1186,29 @@ end;
 procedure TForm2.mniO1Click(Sender: TObject);
 begin
    if OPD.Execute then
+   begin
+     Bitmap1 := TBitmap.Create;
+     Bitmap2 := TBitmap.Create;
+     icoImage := TIcon.Create;
+     jpgImage := TJPEGImage.Create;
+     jpgImage1 := TJPEGImage.Create;
    try
-      Bitmap1 := TBitmap.Create;
-      Bitmap2 := TBitmap.Create;
-      //grafika := TBitmap.Create;
-      Bitmap1.LoadFromFile(OPD.FileName);
+     Bitmap1.LoadFromFile(OPD.FileName);
       Bitmap2.Assign(Bitmap1);
-      Bitmap2.Dormant;
-      Bitmap2.TRANSPARENT := True;
-      Bitmap2.TransparentColor := Bitmap2.Canvas.Pixels[50,50];
-      Bitmap2.FreeImage;
-      Canvas.Draw(Image1.Height, Image1.Width, Bitmap2);
-      image1.Canvas.StretchDraw(Image1.ClientRect, Bitmap1);
-      Bitmap2.TransparentMode := tmAuto;
-      Bitmap2.TransparentColor := clDefault;
-      //Image1.Canvas.CopyRect(Image.Canvas);
+      Bitmap2.Transparent := True;
+      Bitmap2.TransparentColor := clWhite;
+
+      Image1.Canvas.Draw(Image1.Left, Image1.Top, Bitmap2);
+      //Image1.Canvas.Draw(100, 100, Bitmap2);
+      Image1.Canvas.StretchDraw(Image1.ClientRect, Bitmap1);
+
    finally
       Bitmap1.Free;
       Bitmap1.Free;
+      icoImage.Free;
+      jpgImage.Free;
+      jpgImage1.Free;
+   end;
    end;
 end;
 
