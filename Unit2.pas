@@ -31,8 +31,6 @@ type
     btnEraser: TToolButton;
     btnClear: TToolButton;
     btn6: TToolButton;
-    btn7: TToolButton;
-    btn8: TToolButton;
     btn9: TToolButton;
     btn10: TToolButton;
     btn12: TToolButton;
@@ -97,14 +95,11 @@ type
     mniF2: TMenuItem;
     mniB3: TMenuItem;
     mniI1: TMenuItem;
-    btn11: TToolButton;
     btn13: TToolButton;
     btn16: TToolButton;
     btn17: TToolButton;
-    btn19: TToolButton;
     btn20: TToolButton;
     btn21: TToolButton;
-    btn22: TToolButton;
     btn23: TToolButton;
     LabInfo: TLabel;
     shp1: TShape;
@@ -136,8 +131,6 @@ type
     mniI2: TMenuItem;
     tlb5: TToolBar;
     btn3: TToolButton;
-    btn33: TToolButton;
-    btn36: TToolButton;
     rg1: TRadioGroup;
     shp2: TShape;
     scrlbrJasnosc: TScrollBar;
@@ -155,6 +148,7 @@ type
     edForegroundColor: TEdit;
     mniS1: TMenuItem;
     mniF3: TMenuItem;
+    btn19: TToolButton;
     procedure Exit1Click(Sender: TObject);
     procedure Open1Click(Sender: TObject);
     procedure Save1Click(Sender: TObject);
@@ -188,8 +182,6 @@ type
     procedure mniH1Click(Sender: TObject);
     procedure scrlbrJasnoscChange(Sender: TObject);
     procedure btn9Click(Sender: TObject);
-    procedure btn8Click(Sender: TObject);
-    procedure btn7Click(Sender: TObject);
     procedure btn2Click(Sender: TObject);
     procedure mniX1Click(Sender: TObject);
     procedure mniN2Click(Sender: TObject);
@@ -206,14 +198,11 @@ type
     procedure mniN11Click(Sender: TObject);
     procedure mniN12Click(Sender: TObject);
     procedure btn4Click(Sender: TObject);
-    procedure btn11Click(Sender: TObject);
     procedure btn13Click(Sender: TObject);
     procedure btn16Click(Sender: TObject);
     procedure btn17Click(Sender: TObject);
-    procedure btn19Click(Sender: TObject);
     procedure btn20Click(Sender: TObject);
     procedure btn21Click(Sender: TObject);
-    procedure btn22Click(Sender: TObject);
     procedure btn23Click(Sender: TObject);
     procedure mniO1Click(Sender: TObject);
     procedure mniO2Click(Sender: TObject);
@@ -236,6 +225,16 @@ type
     procedure btn6Click(Sender: TObject);
     procedure mniB4Click(Sender: TObject);
     procedure btn15Click(Sender: TObject);
+    procedure btn25Click(Sender: TObject);
+    procedure btn26Click(Sender: TObject);
+    procedure btn27Click(Sender: TObject);
+    procedure btn28Click(Sender: TObject);
+    procedure btn29Click(Sender: TObject);
+    procedure btn30Click(Sender: TObject);
+    procedure btn31Click(Sender: TObject);
+    procedure btn32Click(Sender: TObject);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+    procedure btn19Click(Sender: TObject);
   private
     { Private declarations }
     procedure WhatTools(name: string);
@@ -280,7 +279,6 @@ var
   icoImage: TIcon;
   jpgImage: TJPEGImage;
   jpgImage1: TJPEGImage;
-  points: array of TPoint;
 
 implementation
 
@@ -377,12 +375,6 @@ begin
  WhatTools('Selected pipette tools');
 end;
 
-procedure TForm2.btn11Click(Sender: TObject);
-begin
-  tools := 12; //wiadro
-  WhatTools('Selected brush wiadro zwykłe');
-end;
-
 procedure TForm2.btn12Click(Sender: TObject);
 begin
   tools :=5;
@@ -440,8 +432,8 @@ end;
 
 procedure TForm2.btn19Click(Sender: TObject);
 begin
-  tools := 17; //Elipsa
-  WhatTools('Selected brush Elipsa');
+  tools := 30;
+  WhatTools('Selected long brush 30');
 end;
 
 procedure TForm2.btn1Click(Sender: TObject);
@@ -462,33 +454,40 @@ begin
   WhatTools('Selected brush Rectangle');
 end;
 
-procedure TForm2.btn22Click(Sender: TObject);
-begin
-  tools := 20; //заполнение картинкой
-  WhatTools('Selected brush заполнение картинкой');
-  if tools = 20 then
-  begin
-  if OPD.Execute then
-  begin
-    grafika := TBitmap.Create;
-    try
-      //grafika.LoadFromFile(ExtractFilePath(ParamStr(0))+'black_pedze1.bmp');
-      grafika.LoadFromFile(OPD.FileName);
-      image1.Canvas.StretchDraw(Image1.ClientRect, grafika);
-      //Image1.Canvas.CopyRect(Image1.Canvas);
-      finally
-      grafika.Free;
-      image.Canvas.Brush.Bitmap := nil;
-      end;
-    image1.Repaint;
-    end;
-  end;
-end;
-
 procedure TForm2.btn23Click(Sender: TObject);
 begin
-  tools := 21; //отсечение канвы
-  WhatTools('Selected brush отсечение канвы');
+  tools := 21;
+  WhatTools('Selected long brush');
+end;
+
+procedure TForm2.btn25Click(Sender: TObject);
+begin
+  tools := 22;
+  WhatTools('Selected long brush 22');
+end;
+
+procedure TForm2.btn26Click(Sender: TObject);
+begin
+  tools := 23;
+  WhatTools('Selected long brush 23');
+end;
+
+procedure TForm2.btn27Click(Sender: TObject);
+begin
+  tools := 24;
+  WhatTools('Selected long brush 24');
+end;
+
+procedure TForm2.btn28Click(Sender: TObject);
+begin
+  tools := 25;
+  WhatTools('Selected long brush 25');
+end;
+
+procedure TForm2.btn29Click(Sender: TObject);
+begin
+  tools := 26;
+  WhatTools('Selected long brush 26');
 end;
 
 procedure TForm2.btn2Click(Sender: TObject);
@@ -503,6 +502,24 @@ begin
   end;
 end;
 
+procedure TForm2.btn30Click(Sender: TObject);
+begin
+  tools := 27;
+  WhatTools('Selected long brush 27');
+end;
+
+procedure TForm2.btn31Click(Sender: TObject);
+begin
+  tools := 28;
+  WhatTools('Selected long brush 28');
+end;
+
+procedure TForm2.btn32Click(Sender: TObject);
+begin
+  tools := 29;
+  WhatTools('Selected long brush 29');
+end;
+
 procedure TForm2.btn34Click(Sender: TObject);
 begin
 //if mmoKatLayers.Selected(ItemIndex) then
@@ -511,7 +528,7 @@ end;
 
 procedure TForm2.btn3Click(Sender: TObject);
 begin
-  tools := 22; //отсечение канвы
+  tools := 22;
   WhatTools('Selected brush круг или квадрат');
 end;
 
@@ -542,18 +559,6 @@ begin
   WhatTools('Selected Text tools');
   Tekst := InputBox('New sentence','Enter a sentence','');
   tools := 9;
-end;
-
-procedure TForm2.btn7Click(Sender: TObject);
-begin
- tools := 8;
- WhatTools('Selected new Super brush tools');
-end;
-
-procedure TForm2.btn8Click(Sender: TObject);
-begin
-  tools := 7;
-  WhatTools('Selected Super brush tools');
 end;
 
 procedure TForm2.btn9Click(Sender: TObject);
@@ -683,6 +688,33 @@ begin
   end;
 end;
 
+procedure TForm2.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+var
+userResponse: Integer;
+begin
+   CanClose := MessageDlg('Are you sure you want to close the program?',
+   mtWarning, [mbYes, mbNo], 0) = mrYes;
+
+  if not CanClose then
+  begin
+    // Jeśli użytkownik wybrał opcję „No”, to anuluje zamknięcie aplikacji.
+  end
+  else
+  begin
+    case Application.MessageBox('Do you want to save the image?',
+       'Warning', MB_YESNO + MB_ICONQUESTION + MB_TOPMOST) of
+       IDYES:
+         begin
+           Save1Click(Sender);
+         end;
+       IDNO:
+         begin
+           ModalResult := mrCancel;
+         end;
+    end;
+  end;
+end;
+
 procedure TForm2.FormCreate(Sender: TObject);
 
 begin
@@ -773,7 +805,7 @@ painting := False;
      //cool fill
      if tools = 15 then
      begin
-     image1.Canvas.FloodFill(ClientWidth div 2, ClientHeight div 2, PipetteСolor, fsBorder);
+     image1.Canvas.FloodFill(ClientWidth div 2, ClientHeight div 2, Fincolor, fsSurface);
      end;
 end;
 
@@ -842,7 +874,7 @@ begin
          image1.Canvas.Brush.Color := Fincolor; //Fincolor;
          image1.Canvas.Pen.Color := Fincolor;//Fincolor;
          image1.Canvas.Pen.Mode := PmCopy;
-         image1.Canvas.Rectangle(x-10  * trckbr1.Position, y-10 * trckbr1.Position, x+10  * trckbr1.Position, y+10 * trckbr1.Position);
+         image1.Canvas.Rectangle(x-1  * trckbr1.Position, y-1 * trckbr1.Position, x + 1  * trckbr1.Position, y + 1 * trckbr1.Position);
        end
        else //image1.canvas.Ellipse(x-10,y-10,x+10,y+10);
        begin
@@ -852,7 +884,7 @@ begin
          image1.Canvas.Brush.Color := Fincolor;
          image1.Canvas.Pen.Color := Fincolor;
          image1.Canvas.Pen.Mode := PmCopy;
-         image1.Canvas.Ellipse(x-10  * trckbr1.Position, y-10 * trckbr1.Position, x+10  * trckbr1.Position, y+10 * trckbr1.Position);
+         image1.Canvas.Ellipse(x - 1  * trckbr1.Position, y - 1 * trckbr1.Position, x + 1  * trckbr1.Position, y + 1 * trckbr1.Position);
        end;
      end;
 end;
@@ -911,33 +943,7 @@ begin
       Fincolor := image1.Canvas.Pen.Color;
       image1.Repaint;
     end;
-     //Mask brush
-     if tools = 7 then
-     begin
-       image1.Canvas.Ellipse(mx, my, mx + 1 * trckbr1.Position, my +1 * trckbr1.Position);
-       image1.Canvas.Pen.Color := Fincolor;
-       Image1.Canvas.Pen.Style := psDot;
-       Image1.Canvas.Pen.Width := trckbr1.Position;
-       image1.Canvas.Pen.Mode := PmMask;
-       image1.Repaint; //перерисовка кадра
-     end;
-     //xor
-     if tools = 8 then
-     begin
-     with Canvas do
-      begin
-       //image1.Canvas.Ellipse(mx, my, mx + 1 * trckbr1.Position, my +1 * trckbr1.Position);
-       image1.Canvas.Pen.Color := Fincolor;
-       Image1.Canvas.Pen.Width := trckbr1.Position;
-       //Image1.Canvas.Pen.Width := 1;
-       image1.Canvas.Pen.Mode := PmNotXor;
-       Image1.Canvas.Pen.Style := psDashDot;
-       //image1.Canvas.Pen.Mode := PmMerge;
-       //Image1.Canvas.Pen.Width := trckbr1.Position;
-       image1.Canvas.LineTo(x,y);
-       image1.Repaint; //перерисовка кадра
-      end;
-     end;
+ 
      //brush style
      if tools = 10 then
      begin
@@ -983,14 +989,6 @@ begin
         image1.Repaint;
      end;
 
-     //Wiadro
-     if tools = 12 then
-     begin
-       R := Rect(ClientWidth,ClientHeight,X,Y);
-       //R := Rect(X,Y,ClientWidth,ClientHeight);
-       image1.Canvas.Brush.Color := Fincolor;
-       image1.Canvas.FillRect(R);
-     end;
      //Wiadro tryb  do czarnej kreski
      if tools = 1334 then
      begin
@@ -1010,20 +1008,6 @@ begin
        image1.Canvas.Lock;
        image1.Repaint;
      end;
-
-     //Elipsa
-     if tools = 17 then
-     begin
-       //R := Rect(X,Y,ClientWidth,ClientHeight);
-       image1.Canvas.Brush.Color := Fincolor;
-       image1.Canvas.Pen.Color := Fincolor;
-       image1.Canvas.Brush.Style := bsCross;
-      //image1.Canvas.Pie(mx,my,200,200,61,3,200,61);
-      image1.Canvas.Pie(mx,my,+ 1 * trckbrBrush.Position,+ 1 * trckbrBrush.Position,61,3,200,61);
-      //image1.Canvas.Ellipse(mx, my, mx + 1 * trckbr1.Position, my +1 * trckbr1.Position);
-      //image1.Canvas.LineTo(x,y);
-       image1.Repaint;
-     end;
      //Polygon
      if tools = 18 then
      begin
@@ -1034,29 +1018,118 @@ begin
        //image1.Canvas.PolyBezierTo([Point(mx,my),Point(mx + 1 * trckbrBrush.Position,my + 1 * trckbrBrush.Position),Point(100,200),Point(mx,my)]);
        image1.Repaint;
      end;
-     //Polygon
+
+     //Long brush
      if tools = 21 then
      begin
-       SetLength(Points, 4);
-       Points[0] := Point(10, 20);
-       Points[1] := Point(30, 40);
-       Points[2] := Point(50, 60);
-       Points[3] := Point(70, 30);
-
-
        image1.Canvas.Brush.Color := Fincolor;
        image1.Canvas.Pen.Color := Fincolor;
-       //image1.Canvas.Polygon([Points[0](mx,my),Points[1](mx + 1 * trckbrBrush.Position,my + 1 * trckbrBrush.Position),Point(mx,my)]);
-       Image1.Canvas.Polygon(Points);
-       image1.Canvas.Pen.Width := trckbrBrush.Position;
-       image1.Canvas.Pen.Style := psSolid;
-       //image1.Canvas.Brush.Style := bsCross;
-       //image1.Canvas.ClipRect;
-        image1.Canvas.LineTo(x,y);
+       image1.Canvas.Pen.Width := trckbr1.Position;
+       image1.Canvas.LineTo(x,y);
+       image1.Canvas.LineTo(x+1* trckbr1.Position, y + 1 * trckbr1.Position);
        image1.Repaint;
-
+     end;
+     //Long brush
+     if tools = 22 then
+     begin
+       image1.Canvas.Brush.Color := Fincolor;
+       image1.Canvas.Pen.Color := Fincolor;
+       image1.Canvas.Pen.Width := trckbr1.Position;
+       image1.Canvas.LineTo(x * random(1-100), y * random(1-100));
+       image1.Canvas.LineTo(x+1* trckbr1.Position, y + 1 * trckbr1.Position);
+       //image1.Canvas.Ellipse(mx, my, mx + 1 * trckbr1.Position, my + 1 * trckbr1.Position);
+       image1.Repaint;
      end;
 
+     //Long brush
+     if tools = 23 then
+     begin
+       image1.Canvas.Brush.Color := Fincolor;
+       image1.Canvas.Pen.Color := Fincolor;
+       image1.Canvas.Pen.Width := trckbr1.Position;
+       image1.Canvas.LineTo(x * random(1-100), y * random(1-100));
+       image1.Canvas.LineTo(x+1* trckbr1.Position, y + 1 * trckbr1.Position);
+       image1.Repaint;
+     end;
+
+     //Long brush
+     if tools = 24 then
+     begin
+       image1.Canvas.Brush.Color := Fincolor;
+       image1.Canvas.Pen.Color := Fincolor;
+       image1.Canvas.Pen.Width := trckbr1.Position;
+       image1.Canvas.LineTo(x * random(1000), y * random(1000));
+       image1.Canvas.LineTo(x + 1 * trckbr1.Position, y + 1 * trckbr1.Position);
+       image1.Repaint;
+     end;
+     //Long brush
+     if tools = 25 then
+     begin
+       image1.Canvas.Brush.Color := Fincolor;
+       image1.Canvas.Pen.Color := Fincolor;
+       image1.Canvas.Pen.Width := trckbr1.Position;
+       image1.Canvas.LineTo(x * trckbr1.Position, y * trckbr1.Position);
+       image1.Canvas.LineTo(x + 1 * trckbr1.Position, y + 1 * trckbr1.Position);
+       image1.Repaint;
+     end;
+
+     //Long brush
+     if tools = 26 then
+     begin
+       image1.Canvas.Brush.Color := Fincolor;
+       image1.Canvas.Pen.Color := Fincolor;
+       image1.Canvas.Pen.Width := trckbr1.Position;
+       image1.Canvas.LineTo(x * Random(1000), y * trckbr1.Position);
+       image1.Canvas.LineTo(x + 1 * trckbr1.Position, y + 1 * trckbr1.Position);
+       image1.Repaint;
+     end;
+
+     //Long brush
+     if tools = 27 then
+     begin
+       image1.Canvas.Brush.Color := Fincolor;
+       image1.Canvas.Pen.Color := Fincolor;
+       image1.Canvas.Pen.Width := trckbr1.Position;
+       image1.Canvas.LineTo(x * Random(1000), y * 1000);
+       image1.Canvas.LineTo(x + 1 * trckbr1.Position, y + 1 * trckbr1.Position);
+       image1.Repaint;
+     end;
+
+     //Long brush
+     if tools = 28 then
+     begin
+       image1.Canvas.Brush.Color := Fincolor;
+       image1.Canvas.Pen.Color := Fincolor;
+       image1.Canvas.Pen.Width := trckbr1.Position;
+       image1.Canvas.LineTo(x,y);
+       image1.Canvas.LineTo(x * Random(1000), y * 1000);
+       image1.Canvas.LineTo(x + 1 * trckbr1.Position, y + 1 * trckbr1.Position);
+       image1.Canvas.PolyBezierTo([Point(mx,my),Point(mx +10 * Random(1000),my + 1 * Random(1000)),Point(mx,my)]);
+
+       image1.Repaint;
+     end;
+     //Long brush
+     if tools = 29 then
+     begin
+       image1.Canvas.Brush.Color := Fincolor;
+       image1.Canvas.Pen.Color := Fincolor;
+       image1.Canvas.Pen.Width := trckbr1.Position;
+       image1.Canvas.LineTo(x,y);
+       image1.Canvas.LineTo(x * Random(1000), y * 1000);
+       image1.Canvas.LineTo(x + 1 * trckbr1.Position, y + 1 * trckbr1.Position);
+       image1.Canvas.PolyBezierTo([Point(mx,my),Point(mx +1 * Random(1000),my + 1 * Random(1000)),Point(mx -10 * Random(1000),my + 10 * Random(1000))]);
+       image1.Repaint;
+     end;
+
+     //Long brush
+     if tools = 30 then
+     begin
+       image1.Canvas.Brush.Color := Fincolor;
+       image1.Canvas.Pen.Color := Fincolor;
+       image1.Canvas.Pen.Width := trckbr1.Position;
+       image1.Canvas.LineTo(x,y);
+       image1.Repaint;
+     end;
     end;
 end;
 
@@ -1195,30 +1268,42 @@ end;
 
 procedure TForm2.mniO1Click(Sender: TObject);
 begin
-   if OPD.Execute then
-   begin
-     Bitmap1 := TBitmap.Create;
-     Bitmap2 := TBitmap.Create;
-     icoImage := TIcon.Create;
-     jpgImage := TJPEGImage.Create;
-     jpgImage1 := TJPEGImage.Create;
-   try
-     Bitmap1.LoadFromFile(OPD.FileName);
-      Bitmap2.Assign(Bitmap1);
-      Bitmap2.Transparent := True;
-      Bitmap2.TransparentColor := clWhite;
-      Image1.Canvas.Draw(Image1.Left, Image1.Top, Bitmap2);
-      //Image1.Canvas.Draw(100, 100, Bitmap2);
-      Image1.Canvas.StretchDraw(Image1.ClientRect, Bitmap1);
+  case Application.MessageBox('When opening a new file, this file will be closed?',
+    'Notification', MB_OKCANCEL + MB_ICONWARNING + MB_DEFBUTTON2 +
+    MB_TOPMOST) of
+    IDOK:
+      begin
+         Image1.Picture := nil;
+         if OPD.Execute then
+         begin
+            Bitmap1 := TBitmap.Create;
+            Bitmap2 := TBitmap.Create;
+            icoImage := TIcon.Create;
+            jpgImage := TJPEGImage.Create;
+            jpgImage1 := TJPEGImage.Create;
+         try
+            Bitmap1.LoadFromFile(OPD.FileName);
+            Bitmap2.Assign(Bitmap1);
+            Bitmap2.Transparent := True;
+            Bitmap2.TransparentColor := clWhite;
+            Image1.Canvas.Draw(Image1.Left, Image1.Top, Bitmap2);
+            Image1.Canvas.StretchDraw(Image1.ClientRect, Bitmap1);
+         finally
+            Bitmap1.Free;
+            Bitmap1.Free;
+            icoImage.Free;
+            jpgImage.Free;
+            jpgImage1.Free;
+         end;
+         end;
+      end;
+    IDCANCEL:
+      begin
 
-   finally
-      Bitmap1.Free;
-      Bitmap1.Free;
-      icoImage.Free;
-      jpgImage.Free;
-      jpgImage1.Free;
-   end;
-   end;
+      end;
+  end;
+
+
 end;
 
 procedure TForm2.mniO2Click(Sender: TObject);
