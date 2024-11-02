@@ -16,7 +16,4 @@
 <img src ="https://i.ibb.co/W541jnf/obraz.jpg" alt="Dimart free Paint in Delphi 11" width="728">
 <img src ="https://i.ibb.co/D13JFSh/Image.jpg" alt="Dimart free Paint in Delphi 11" width="728">
 
-<h1> Developers</h1>
-1. Dmitriy Vygovskiy
-<h1>License<h1>
 
